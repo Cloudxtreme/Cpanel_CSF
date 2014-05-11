@@ -1,0 +1,49 @@
+<?php
+		$this->Widget->clear();
+		$this->Widget->create($this->_("CpanelCsfPlugin.name", true));
+		
+		$this->Form->create();
+		?>
+
+				<div class="inner">
+        			<div class="pad">
+        				<ul>
+        					<li>
+        					   <?php
+        					  $admin_n = $this->Html->ifSet($meta->allow_admin, "0");
+        					  $admin_bool = true;
+        				      if ($admin_n === "0") $admin_bool = false;
+
+        					   //echo var_dump($meta);
+
+                              $this->Form->fieldCheckbox("allow_admin", "true",$admin_bool, array('id'=>"allow_admin"));
+                              $this->Form->label($this->_("CpanelCsfPlugin.allow_multi_ip_admin", true), "allow_admin", array('class'=>"inline"));
+                              ?>
+                              <span class="tooltip"><?php $this->_("AppController.tooltip.text");?><div><?php $this->_("CpanelCsfPlugin.allow_multi_ip_admin_note"); ?></div></span>
+        					</li>
+        					<li>
+                               <?php
+                               $client = $this->Html->ifSet($meta->allow_client, 0);
+                               $client_bool = true;
+                               if ($client === "0") $client_bool= false;
+
+                                    $this->Form->fieldCheckbox("allow_client", "true", $client_bool, array('id'=>"allow_client"));
+                                    $this->Form->label($this->_("CpanelCsfPlugin.allow_multi_ip_client", true), "allow_client", array('class'=>"inline"));
+									$this->Form->fieldHidden( "dummy", "");
+                                    ?>
+                                    <span class="tooltip"><?php $this->_("AppController.tooltip.text");?><div><?php $this->_("CpanelCsfPlugin.allow_multi_ip_client_note"); ?></div></span>
+									
+        					</li>
+        				</ul>
+        				<div class="button_row">
+        					<a class="btn_right submit" href="#"><?php $this->_("CpanelCsfPlugin.field_submit");?></a>
+        				</div>
+        			</div>
+        		</div>
+
+
+
+		<?php
+		$this->Form->end();
+		$this->Widget->end();
+		?>

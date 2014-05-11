@@ -1,0 +1,74 @@
+	<?php
+    		echo $this->Html->ifSet($message);
+	?>
+	<?php
+	$this->WidgetClient->clear();
+	$this->WidgetClient->setStyleSheet($this->view_dir . "css/style.css");
+		$this->WidgetClient->create($this->_("CpanelCsfManagePlugin.index.page_title", true));
+		?>
+		<?php if(!$isModuleAvailable) { ?>
+        	<div>
+             		<article class="error_box error">
+        			<p><?php $this->Html->_($this->_("CpanelCsfManagePlugin.index.page_info"), false, true); ?></p>
+            		</article>
+		</div>
+		<?php }
+		else {
+                $nserver = count($servers);
+                  if( $nserver >0) {
+		$this->Form->create();
+		?>
+		<div class="pad">
+			<ul>
+				<li>
+				   <span class="text-item">
+					<?php
+						$this->Form->label($this->_("CpanelCsfManagePlugin.index.ip", true), "ip");
+						if($isReadonly)
+                            $this->Form->label($this->Html->ifSet($vars['ip']), "ip1");
+                        else
+                            $this->Form->fieldText("ip", $this->Html->ifSet($vars['ip']), array("id"=>"ip"));
+					?>
+				  </span>
+				</li>
+				<li>
+					<?php
+					$this->Form->label($this->_("CpanelCsfManagePlugin.index.server", true), "server");
+					if( $nserver ==1) {
+					 foreach ($servers as $key => $value) {
+							$this->Form->fieldHidden('server', $key);
+							echo $value;
+						}
+					 }
+					 else { 
+					     $this->Form->fieldSelect("server", $this->Html->ifSet($servers), $this->Html->ifSet( $vars['server']), array("id"=>"server"));
+					}
+					?>
+					</li>
+				</ul>
+			</div>
+			<div class="btn submit right_btn"><a class="submit" href="#"><?php $this->_("CpanelCsfManagePlugin.index.unblock");?></a></div>
+		<?php
+
+		$this->Form->end();
+		if(isset($serv['msg'])) { ?>
+		<table class="csf" width="100%">
+		    <?php
+            	echo $this->Html->ifSet($serv['msg']);
+            ?>
+		</table>
+		<?php } 
+                  }
+                 else {
+                  ?>
+                     <div>
+            		 <article class="error_box error">
+        			<p><?php $this->Html->_($this->_("CpanelCsfManagePlugin.index.page_no_server"), false, true); ?>
+        			</p>
+            		</article>
+		</div>
+                 <?php 
+                   }
+	    }
+    	$this->WidgetClient->end();
+    ?>
